@@ -1,7 +1,16 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || ''
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || ''
+
+// Validate environment variables
+if (!supabaseUrl || supabaseUrl.includes('your_supabase_project_url_here')) {
+  throw new Error('VITE_SUPABASE_URL is not properly configured. Please set it to your actual Supabase project URL in the .env file.')
+}
+
+if (!supabaseAnonKey || supabaseAnonKey.includes('your_supabase_anon_key_here')) {
+  throw new Error('VITE_SUPABASE_ANON_KEY is not properly configured. Please set it to your actual Supabase anon key in the .env file.')
+}
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   realtime: {
